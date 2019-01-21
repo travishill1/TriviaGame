@@ -1,7 +1,48 @@
-.questionBox {
+
+
+p {
+    font-size: 26px;
+    color: yellow;
+    background-color: grey;
+}
+
+h3 {
+    text-align: center;
+}
+
+li {
+    font-size: 20px;
+    color: blue;
+    background-color: lightgrey;
+    width: 25%;
+    list-style-type: none;
+}
+
+a:focus {
+    background-color: orange;
+  }
+
+a:hover {
+    background-color: red;
+  }
+
+a:active {
+    background-color: black;
+  }
+
+
+
+  .questionBox {
     font-size: 30px;
     border: 10px;
     background-color: lightblue;
     color: red;
     font-weight: bold;
+} 
+
+
+.settings-box {
+    background-color: lightblue;
+    width: 50%;
+    margin: 0 auto;
 }
