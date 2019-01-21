@@ -18,15 +18,12 @@ li {
     list-style-type: none;
 }
 
-a:focus {
-    background-color: orange;
-  }
 
-a:hover {
+li:hover {
     background-color: red;
   }
 
-a:active {
+li:active {
     background-color: black;
   }
 
