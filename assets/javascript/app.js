@@ -38,23 +38,25 @@ game = {
         // console.log(this.questions);
         game.queryURL = "https://opentdb.com/api.php?amount=10&category=20&difficulty=easy&type=multiple";
         game.winCount = 0;
+        game.wrongCount = 0;
+        game.currentGuess = "";
+        game.currentCorrect = "";
 
 
         $.ajax({
             url: this.queryURL,
             method: "GET",
         }).then(function(response) {
-         
             results = response.results;
             // console.log(this.questions);
-            results.forEach((result)=>{
+            results.forEach(function(result){
                 category = result.category;
                 question = result.question;
                 correct = result.correct_answer;
                 answerList = result.incorrect_answers;
                 answerList.push(correct);
                 // console.log(answerList);
-                const questionObject = new QSlide(category, question, correct, answerList);
+                let questionObject = new QSlide(category, question, correct, answerList);
                 // console.log(this);
                 // console.log(this.questions);
                 game.questions.push(questionObject);
@@ -67,26 +69,74 @@ game = {
                 //   $("tbody").append(tRow);
                 
                 })
+            game.newQuestion();
         });
     },
 
     newQuestion : function(){
+        // removes one of the questions from the array and gives it the name questionObject.
+        let questionObject = game.questions.pop();
+        game.currentCorrect = questionObject.correct;
+        $("#question-area").append(questionObject.slide);
+        let answers = $(".question-slide li");
+        console.log(game.currentCorrect);
+
+        answers.each(function(){
+            $(this).on("click", function(){
+                // console.log("answer clicked");
+                game.currentGuess = $(this).html();
+                game.checkAnswer();
+            })
+        })
         // gets question from array
         // makes game.correct the correct answer associated with that question pull
-        // appends 
-        $("#question-area").append(questionObject.slide);
+        // appends  
     },
 
-    gameGo : function(){
-        while(game.questions){
-            game.questionRound()
+    checkAnswer : function(){
+        // see if game.currentGuess === game.currentCorrect
+        console.log(game.currentCorrect);
+        console.log(game.currentGuess);
+        if (game.currentGuess === game.currentCorrect){
+           game.guessCorrect(); 
+        }
+        else{
+            game.guessWrong();
+        }
+        setTimeout(game.continueGame, 150);
+    },
+
+    guessCorrect : function(){
+        game.winCount += 1;
+        $("#question-area").html("Correct!");
+        // game.newQuestion();
+    },
+
+    guessWrong : function(){
+        game.loseCount += 1;
+        $("#question-area").html("Wrong!");
+        // game.newQuestion();
+    },
+
+    continueGame : function(){
+        if(game.questions){
+            game.newQuestion();
+        }
+        else{
+            game.gameEnd();
         }
     },
+
+    // gameRound : function(){
+    //     while(game.questions){
+    //         game.questionRound()
+    //     }
+    // },
 
 
     gameEnd : function(){
         
-        // go to score screen
+        // go to score screen if questions array.length = 0
     },
 
 }

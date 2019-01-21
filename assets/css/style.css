@@ -30,9 +30,12 @@ a:active {
     background-color: black;
   }
 
+.question-slide {
+    font-size: 40px;
+    color: pink;
+}
 
-
-  .questionBox {
+.questionBox {
     font-size: 30px;
     border: 10px;
     background-color: lightblue;
